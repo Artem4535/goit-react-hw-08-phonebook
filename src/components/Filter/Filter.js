@@ -1,6 +1,6 @@
 import css from './Filter.module.css';
 import { useDispatch } from 'react-redux';
-import { getVisibleContacts } from 'redux/filterSlice';
+import { getVisibleContacts } from 'redux/contacts/filterSlice';
 export default function Filter() {
   const dispatch = useDispatch();
   const handlerFilter = event => {

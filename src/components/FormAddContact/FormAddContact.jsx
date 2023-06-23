@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import Notiflix from 'notiflix';
 import css from './PhoneBook.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/operations';
-import { getContacts } from 'redux/selectors';
-import { nanoid } from '@reduxjs/toolkit';
+import { addContact } from 'redux/contacts/operations';
+import { getContacts } from 'redux/contacts/selectors';
 
-export function FormHandler() {
+export function FormAddContact() {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
 
@@ -19,8 +18,8 @@ export function FormHandler() {
         setName(value);
         break;
 
-      case 'phone':
-        setPhone(value);
+      case 'number':
+        setNumber(value);
         break;
 
       default:
@@ -32,26 +31,26 @@ export function FormHandler() {
     e.preventDefault();
     const form = e.target;
     const formName = form.elements.name.value;
-    const formphone = form.elements.phone.value;
+    const formNumber = form.elements.number.value;
 
     const existingName = contacts.find(({ name }) => name === formName);
-    const existingphone = contacts.find(({ phone }) => phone === formphone);
+    const existingNumber = contacts.find(({ number }) => number === formNumber);
 
     if (existingName) {
       reset();
       return Notiflix.Notify.failure(`${formName} is already in contacts`);
-    } else if (existingphone) {
+    } else if (existingNumber) {
       reset();
-      return Notiflix.Notify.failure(`${formphone} is already in contacts`);
+      return Notiflix.Notify.failure(`${formNumber} is already in contacts`);
     }
 
-    dispatch(addContact({ name, phone, id: nanoid() }));
+    dispatch(addContact({ name, number }));
     reset();
   };
 
   const reset = () => {
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
   return (
@@ -72,8 +71,8 @@ export function FormHandler() {
           <label>
             Phone:
             <input
-              value={phone}
-              name="phone"
+              value={number}
+              name="number"
               onChange={onChangeHandler}
               type="tel"
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -89,5 +88,3 @@ export function FormHandler() {
     </form>
   );
 }
-
-export default FormHandler;
