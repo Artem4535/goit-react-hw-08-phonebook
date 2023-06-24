@@ -1,3 +1,14 @@
+import {
+  AuthLink,
+  Button,
+  FormContainer,
+  Input,
+  InputContainer,
+  Label,
+  Title,
+  ShowPasswordButton,
+  BtnContainer,
+} from 'Styled/Form.styled';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logIn } from 'redux/auth/operation';
@@ -5,11 +16,11 @@ import { logIn } from 'redux/auth/operation';
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
+  const toggleShowPassword = () => {
+    setShowPassword(prevShowPassword => !prevShowPassword);
   };
 
   const handleOnChange = e => {
@@ -21,6 +32,7 @@ const LoginForm = () => {
 
       case 'password':
         setPassword(value);
+        break;
 
       default:
         break;
@@ -38,34 +50,39 @@ const LoginForm = () => {
     setPassword('');
   };
   return (
-    <>
+    <FormContainer>
       <form onSubmit={handleSubmit}>
-        <label>
+        <Title>Log In</Title>
+        <Label>
           Email
-          <input
+          <Input
             onChange={handleOnChange}
             name="email"
             value={email}
             type="mail"
           />
-        </label>
-        <br />
-        <label>
+        </Label>
+        <Label>
           Password
-          <input
-            onChange={handleOnChange}
-            name="password"
-            value={password}
-            type={passwordVisible ? 'text' : 'password'}
-          />
-        </label>
-        <br />
-        <button type="button" onClick={togglePasswordVisibility}>
-          Меняем
-        </button>
-        <button type="submit">Log In</button>
+          <InputContainer>
+            <Input
+              onChange={handleOnChange}
+              name="password"
+              value={password}
+              type={showPassword ? 'text' : 'password'}
+              showPasswordButton={showPassword}
+            />
+            <ShowPasswordButton type="button" onClick={toggleShowPassword}>
+              {showPassword ? 'Hide' : 'Show'}
+            </ShowPasswordButton>
+          </InputContainer>
+        </Label>
+        <BtnContainer>
+          <AuthLink to="/register">Register</AuthLink>
+          <Button type="submit">Log In</Button>
+        </BtnContainer>
       </form>
-    </>
+    </FormContainer>
   );
 };
 

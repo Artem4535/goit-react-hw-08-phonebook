@@ -7,11 +7,14 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  gap: 20px;
+  gap: 5px;
 }
 
 .item {
-  justify-content: center;
   display: flex;
-  gap: 10px;
+  justify-content: space-evenly;
+  padding: 5px;
+  background-color: rgb(190, 196, 17);
+  border-radius: 10px;
+  align-items: center;
 }

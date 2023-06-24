@@ -4,7 +4,6 @@ import React from 'react';
 const PageLogin = () => {
   return (
     <>
-      <h2>Log In</h2>
       <LoginForm />
     </>
   );

@@ -1,18 +1,22 @@
 import css from './Contacts.module.css';
 import { useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contacts/operations';
+import { CloseButton } from './Contacts.styled';
 
-export const ContactsItem = ({ name, phone, id }) => {
+export const ContactsItem = ({ name, number, id }) => {
   const dispatch = useDispatch();
   return (
     <>
       <li className={css.item}>
         <p>
-          {name}: {phone}
+          {name}: {number}
         </p>
-        <button onClick={() => dispatch(deleteContact(id))} type="button">
+        <CloseButton
+          onClick={() => dispatch(deleteContact(id))}
+          type="CloseButton"
+        >
           Delete
-        </button>
+        </CloseButton>
       </li>
     </>
   );

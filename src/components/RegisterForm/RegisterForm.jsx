@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from 'redux/auth/operation';
+import {
+  FormContainer,
+  Label,
+  Input,
+  Button,
+  ShowPasswordButton,
+  InputContainer,
+  Title,
+  AuthLink,
+  BtnContainer,
+} from 'Styled/Form.styled';
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleOnChange = e => {
     const { name, value } = e.target;
@@ -21,6 +33,7 @@ const RegisterForm = () => {
 
       case 'password':
         setPassword(value);
+        break;
 
       default:
         break;
@@ -38,36 +51,55 @@ const RegisterForm = () => {
     setEmail('');
     setPassword('');
   };
+
+  const toggleShowPassword = () => {
+    setShowPassword(prevShowPassword => !prevShowPassword);
+  };
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Register</h2>
-      <label>
-        name
-        <input onChange={handleOnChange} value={name} name="name" type="text" />
-      </label>
-      <br />
-      <label>
-        Email
-        <input
-          onChange={handleOnChange}
-          value={email}
-          name="email"
-          type="mail"
-        />
-      </label>
-      <br />
-      <label>
-        Password
-        <input
-          onChange={handleOnChange}
-          value={password}
-          name="password"
-          type="password"
-        />
-      </label>
-      <br />
-      <button type="submit">Register</button>
-    </form>
+    <FormContainer>
+      <form onSubmit={handleSubmit}>
+        <Title>Register</Title>
+        <Label>
+          Name
+          <Input
+            onChange={handleOnChange}
+            value={name}
+            name="name"
+            type="text"
+          />
+        </Label>
+        <Label>
+          Email
+          <Input
+            onChange={handleOnChange}
+            value={email}
+            name="email"
+            type="mail"
+          />
+        </Label>
+
+        <Label>
+          Password
+          <InputContainer>
+            <Input
+              onChange={handleOnChange}
+              value={password}
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              showPasswordButton={showPassword}
+            />
+            <ShowPasswordButton type="button" onClick={toggleShowPassword}>
+              {showPassword ? 'Hide' : 'Show'}
+            </ShowPasswordButton>
+          </InputContainer>
+        </Label>
+        <BtnContainer>
+          <AuthLink to="/login">Login</AuthLink>
+
+          <Button type="submit">Register</Button>
+        </BtnContainer>
+      </form>
+    </FormContainer>
   );
 };
 

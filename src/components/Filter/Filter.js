@@ -1,3 +1,4 @@
+import { Input } from 'Styled/Form.styled';
 import css from './Filter.module.css';
 import { useDispatch } from 'react-redux';
 import { getVisibleContacts } from 'redux/contacts/filterSlice';
@@ -11,7 +12,7 @@ export default function Filter() {
     <form className={css.form}>
       <label className={css.find}>
         Find by name
-        <input type="text" onChange={handlerFilter}></input>
+        <Input type="text" onChange={handlerFilter}></Input>
       </label>
     </form>
   );

@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './Layout';
-import PageRegister from 'Page/PageRegister';
-import PageLogin from 'Page/PageLogin';
-import PageContacts from 'Page/PageContacts';
-import HomePage from 'Page/HomePage';
 import { getUserIsRefresh } from 'redux/auth/selectors';
 import { refreshUserData } from 'redux/auth/operation';
 import PrivateRout from './PrivateRout';
 import PublicRoute from './PublicRoute';
+const PageRegister = lazy(() => import('../Page/PageRegister'));
+const PageLogin = lazy(() => import('../Page/PageLogin'));
+const PageContacts = lazy(() => import('../Page/PageContacts'));
+const HomePage = lazy(() => import('../Page/HomePage'));
 
 export function App() {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ export function App() {
 
   return (
     <>
-      {!isRefreshingUser && (
+      <Suspense fallback="Завантаження...">
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
@@ -44,7 +44,7 @@ export function App() {
             />
           </Route>
         </Routes>
-      )}
+      </Suspense>
       {/* <Section>
         <FormHandler />
       </Section>
